@@ -22,15 +22,15 @@ fn exit_if_game_is_finished(
     e2: &impl Coordinate,
     player: Arc<RwLock<Player>>,
 ) {
-    let read = {
+    let (coordinate, is_finished) = {
         let p = (*player).read().unwrap();
         (p.get_coordinate().clone(), p.is_finished())
     };
 
-    if e1.equals(&read.0) || e2.equals(&read.0) {
+    if e1.equals(&coordinate) || e2.equals(&coordinate) {
         println!("Player has lost");
         exit(0)
-    } else if read.1 {
+    } else if is_finished {
         println!("Player has won");
         exit(0)
     }

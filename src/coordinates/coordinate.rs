@@ -7,10 +7,7 @@ pub trait Coordinate {
         Self: Sized;
 
     #[inline]
-    fn equals(&self, other: &impl Coordinate) -> bool
-    where
-        Self: Sized,
-    {
+    fn equals(&self, other: &impl Coordinate) -> bool {
         self.get_x() == other.get_x() && self.get_y() == other.get_y()
     }
 }

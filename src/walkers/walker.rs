@@ -24,13 +24,8 @@ pub trait Walker {
 
 #[async_trait]
 pub(crate) trait AsyncWalker {
-    async fn move_async(&self)
-    where
-        Self: Sized;
-
-    async fn start(&self)
-    where
-        Self: Sized;
+    async fn move_async(&self);
+    async fn start(&self);
 }
 
 #[async_trait]
@@ -54,15 +49,10 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
                 }
 
                 1 => {
-                    let y = {
+                    let (y, max_y) = {
                         let r = (**self).read().unwrap();
                         let r2 = r.get_coordinate().clone();
-                        r2.get_y()
-                    };
-
-                    let max_y = {
-                        let r = (**self).read().unwrap();
-                        r.get_max_y()
+                        (r2.get_y(), r.get_max_y())
                     };
 
                     if y < max_y {
@@ -73,15 +63,10 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
                 }
 
                 2 => {
-                    let x = {
+                    let (x, max_x) = {
                         let r = (**self).read().unwrap();
                         let r2 = r.get_coordinate().clone();
-                        r2.get_x()
-                    };
-
-                    let max_x = {
-                        let r = (**self).read().unwrap();
-                        r.get_max_y()
+                        (r2.get_x(), r.get_max_y())
                     };
 
                     if x < max_x {
