@@ -24,7 +24,7 @@ fn exit_if_game_is_finished(
 ) {
     let (coordinate, is_finished) = {
         let p = (*player).read().unwrap();
-        (p.get_coordinate().clone(), p.is_finished())
+        (*p.get_coordinate(), p.is_finished())
     };
 
     if e1.equals(&coordinate) || e2.equals(&coordinate) {
@@ -47,17 +47,17 @@ async fn draw_table_while_playing(
     loop {
         let p = {
             let p = (*player).read().unwrap();
-            p.get_coordinate().clone()
+            *p.get_coordinate()
         };
 
         let e1 = {
             let e1 = (*enemy1).read().unwrap();
-            e1.get_coordinate().clone()
+            *e1.get_coordinate()
         };
 
         let e2 = {
             let e2 = (*enemy2).read().unwrap();
-            e2.get_coordinate().clone()
+            *e2.get_coordinate()
         };
 
         (0..max_y).for_each(|i| {

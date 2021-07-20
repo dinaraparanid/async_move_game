@@ -37,7 +37,7 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
                 0 => {
                     let y = {
                         let r = (**self).read().unwrap();
-                        let r = r.get_coordinate().clone();
+                        let r = r.get_coordinate();
                         r.get_y()
                     };
 
@@ -51,7 +51,7 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
                 1 => {
                     let (y, max_y) = {
                         let r = (**self).read().unwrap();
-                        let r2 = r.get_coordinate().clone();
+                        let r2 = r.get_coordinate();
                         (r2.get_y(), r.get_max_y())
                     };
 
@@ -65,7 +65,7 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
                 2 => {
                     let (x, max_x) = {
                         let r = (**self).read().unwrap();
-                        let r2 = r.get_coordinate().clone();
+                        let r2 = r.get_coordinate();
                         (r2.get_x(), r.get_max_y())
                     };
 
