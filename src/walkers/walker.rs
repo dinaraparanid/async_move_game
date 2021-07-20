@@ -36,10 +36,7 @@ pub(crate) trait AsyncWalker {
 #[async_trait]
 impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
     #[inline]
-    async fn move_async(&self)
-    where
-        Self: Sized,
-    {
+    async fn move_async(&self) {
         loop {
             match rand::thread_rng().gen_range(0..4) {
                 0 => {
@@ -114,10 +111,7 @@ impl<T: Walker + Send + Sync> AsyncWalker for Arc<RwLock<T>> {
     }
 
     #[inline]
-    async fn start(&self)
-    where
-        Self: Sized,
-    {
+    async fn start(&self) {
         loop {
             self.move_async().await
         }
